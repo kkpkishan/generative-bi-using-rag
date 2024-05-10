@@ -34,11 +34,6 @@ services:
         chmod +x plugins/opensearch-security/tools/securityadmin.sh && 
         bash plugins/opensearch-security/tools/securityadmin.sh -cd config/opensearch-security -icl -nhnv -cacert config/certificates/ca/ca.pem -cert config/certificates/ca/admin.pem -key config/certificates/ca/admin.key -h localhost;
         wait"
-    healthcheck:
-      test: ["CMD-SHELL", "curl -k -u admin:admin --silent --fail https://localhost:9200/_cluster/health || exit 1"]
-      interval: 30s
-      timeout: 30s
-      retries: 3
     logging:
       driver: "json-file"
       options:
@@ -82,22 +77,12 @@ services:
       - opensearch-data2:/usr/share/opensearch/data
       - "./opensearch.yml:/usr/share/opensearch/config/opensearch.yml"
       - "./certs:/usr/share/opensearch/config/certificates:ro"
-    healthcheck:
-      test: ["CMD-SHELL", "curl -k -u admin:admin --silent --fail https://localhost:9200/_cluster/health || exit 1"]
-      interval: 30s
-      timeout: 30s
-      retries: 3
     networks:
       - opensearch-net
 
   opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:2.11.1
     container_name: opensearch-dashboards
-    depends_on:
-      opensearch-node1:
-        condition: service_healthy
-      opensearch-node2:
-        condition: service_healthy
     ports:
       - 5601:5601
     expose:
