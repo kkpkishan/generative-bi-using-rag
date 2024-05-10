@@ -1,0 +1,51 @@
+{
+    "models": {
+        "Claude 2": {}
+    },
+    "data_sources": {
+        "shopping_guide": {
+            "is_demo": true,
+            "comments": "This is a user behavior analysis dataset.",
+            "db_url": "mysql+pymysql://{RDS_MYSQL_USERNAME}:{RDS_MYSQL_PASSWORD}@{RDS_MYSQL_HOST}:{RDS_MYSQL_PORT}/{RDS_MYSQL_DBNAME}",
+            "tables_info": {
+                "interactions": {
+                    "ddl": "CREATE TABLE `interactions`(\n`item_id` string, --Item ID\n`user_id` int, --User ID\n`event_type` string, --Interaction type, such as view, purchase, etc.\n`timestamp` bigint, --Timestamp of the interaction event\n`discount` string --Discount information\n)",
+                    "description": "Records user interactions with products, including user behaviors such as browsing and purchasing. Each record has a unique product ID (`item_id` column) and a user ID (`user_id` column)."
+                },
+                "items": {
+                    "ddl": "CREATE TABLE `items`(\n`item_id` string, --Item ID\n`price` float, --Product price\n`category_l1` string, --Primary category\n`category_l2` string, --Secondary category\n`product_description` string, --Product description\n`gender` string, --Applicable gender\n`promoted` string --Whether it is a promoted item\n)\n",
+                    "description": "Product information table, recording each product's price, category, description, etc. Contains 7 columns. Each record has a unique product ID (`item_id` column)."
+                },
+                "users": {
+                    "ddl": "CREATE TABLE `users`(\n`user_id` string, --User ID\n`age` int, --User age\n`gender` string --User gender\n)",
+                    "description": "User information table, recording each user's age and gender. Contains 3 columns. Each record has a unique user ID (`user_id` column)."
+                }
+            },
+            "hints": "For timestamp column, please use function FROM_UNIXTIME(int) to convert it to date datatype",
+            "search_samples": [
+                "What are the top ten selling products?",
+                "What is the average age of users?",
+                "What is the average price of products?",
+                "What is the average price of products purchased by women under 30?",
+                "What are the top three product categories browsed by men over 40?",
+                "How many discount products are purchased by users aged 18-25?",
+                "What is the conversion rate from views to purchases for each product category?",
+                "What are the top five products browsed by users under 30?",
+                "In the past 30 days, how many male and female users have completed purchases?",
+                "What is the age distribution of users purchasing products priced over $50?",
+                "What is the most common category of discount products purchased by women under 25?",
+                "How many products are purchased multiple times by the same user?",
+                "Which products have been viewed but never purchased?"
+            ],
+            "opensearch": {
+                "opensearch_host": "$AOS_HOST",
+                "opensearch_port": "$AOS_PORT",
+                "region_name": "$AOS_AWS_REGION",
+                "domain": "$AOS_DOMAIN",
+                "index_name": "$AOS_INDEX",
+                "opensearch_user": "$AOS_USER",
+                "opensearch_password": "$AOS_PASSWORD"
+            }
+        }
+    }
+}
