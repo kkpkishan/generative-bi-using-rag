@@ -79,6 +79,20 @@ services:
       - ./initial_data:/opt/data
     networks:
       - opensearch-net
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - mysql-db
+    environment:
+      PMA_HOST: mysql-db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+    networks:
+      - opensearch-net
   streamlit-demo:
     container_name: nlq-webserver
     build: .
