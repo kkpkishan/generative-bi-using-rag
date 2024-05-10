@@ -131,7 +131,7 @@ def index_to_opensearch():
             Body=json.dumps({"inputs": [text], **model_kwargs}),
             ContentType="application/json",
         )
-        # 中文instruction => 为这个句子生成表示以用于检索相关文章：
+        # Generate a representation for this sentence for retrieving related articles：
         json_str = response_model["Body"].read().decode("utf8")
         json_obj = json.loads(json_str)
         embeddings = json_obj["sentence_embeddings"]
