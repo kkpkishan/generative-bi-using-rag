@@ -1,4 +1,4 @@
-cluster.name: os-cluster
+cluster.name: opensearch-cluster
 network.host: 0.0.0.0
 
 bootstrap.memory_lock: "true" # along with the memlock settings below, disables swapping
