@@ -35,7 +35,7 @@ services:
         bash plugins/opensearch-security/tools/securityadmin.sh -cd config/opensearch-security -icl -nhnv -cacert config/certificates/ca/ca.pem -cert config/certificates/ca/admin.pem -key config/certificates/ca/admin.key -h localhost;
         wait"
     healthcheck:
-      test: ["CMD-SHELL", "curl -s http://localhost:9200 || exit 1"]
+      test: ["CMD-SHELL", "curl -k -u admin:admin --silent --fail https://localhost:9200/_cluster/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 10
@@ -83,7 +83,7 @@ services:
       - "./opensearch.yml:/usr/share/opensearch/config/opensearch.yml"
       - "./certs:/usr/share/opensearch/config/certificates:ro"
     healthcheck:
-      test: ["CMD-SHELL", "curl -s http://localhost:9200 || exit 1"]
+      test: ["CMD-SHELL", "curl -k -u admin:admin --silent --fail https://localhost:9200/_cluster/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 10
