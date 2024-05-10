@@ -293,7 +293,9 @@ def ask(question: Question) -> Answer:
 
                 sql_search_result.data_analyse = search_intent_analyse_result
 
-                model_select_type, show_select_data = data_visualization(model_type, search_box, search_intent_result["data"], database_profile['prompt_map'])
+                model_select_type, show_select_data = data_visualization(model_type, search_box,
+                                                                         search_intent_result["data"],
+                                                                         database_profile['prompt_map'])
 
                 sql_search_result.sql_data = show_select_data
                 sql_search_result.data_show_type = model_select_type
